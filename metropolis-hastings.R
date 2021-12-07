@@ -19,7 +19,7 @@ previous = rmvnorm(1, mean = means, sigma = covariance_matrix)
 df = data.frame(matrix(ncol = dimensions, nrow = 0))
 
 # Iterate till we have data points equal to the number of samples needed
-for(i in 1 : num_samples){
+for(i in 1 : num_samples + burn_in_threshold){
 	# Continue this iteration till we accept a value from the proposal distribution
 	while(TRUE) {
 		# Generate a random value from proposal distribution
