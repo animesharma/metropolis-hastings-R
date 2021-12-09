@@ -1,18 +1,18 @@
 library("mvtnorm")
 dimensions = 4
-num_samples = 1000
-burn_in_threshold = 250
+num_samples = 5000
+burn_in_threshold = 25
 
 # Create a multivariate normal distribution f with some parameters
 f_means = runif(dimensions)
-f_cov = diag(dimensions)
+f_cov = rWishart(1, dimensions, diag(dimensions))[, , 1]
 f = function(x) {
 	return(dmvnorm(x, f_means, f_cov))
 }
 
 # Create a multivariate normal proposal distribution
 means = runif(dimensions)
-covariance_matrix = diag(dimensions)
+covariance_matrix =rWishart(1, dimensions, diag(dimensions))[, , 1]
 # Initialize previous with a random value
 previous = rmvnorm(1, mean = means, sigma = covariance_matrix)
 # Create an empty data frame to store the accepted values in
@@ -31,8 +31,12 @@ for(i in 1 : num_samples + burn_in_threshold){
 		# Check if the current value is feasible
 		if (runif(1) < min(alpha, 1)) {
 			# Append the current value in data frame once the burn-in threshold has been surpassed
-			if(i > burn_in_threshold) {
-				df = rbind(df, current)
+		  df = rbind(df, current)
+			if(i > 29) {
+			  print(i)
+			  #print(df)
+				covariance_matrix=cov(df)
+				means=colMeans(df)
 			}
 			# Update the value of previous to current if current is feasible
 			previous = current
@@ -58,4 +62,4 @@ print(f_means)
 # Estimated covariance matrix of accepted samples
 print(cov(df))
 # Original covariance matrix used for f
-print(covariance_matrix)
+print(f_cov)
