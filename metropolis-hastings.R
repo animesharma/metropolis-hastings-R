@@ -1,3 +1,14 @@
+# Team Members:
+
+# Animesh Sharma                - as3592
+# Wanying Mo                    - wm318
+# Yaniv Bronshtein              - yb262
+# Venkata Krishnam Raju Dalta   - vkd20
+# Vipul Gharde                  - vig4
+# Aditya Maheshwari             - am2971
+# Toshitt Ahuja                 - ta498
+# Fan Shen                      - fs470
+
 library("mvtnorm")
 
 dimensions = 4
